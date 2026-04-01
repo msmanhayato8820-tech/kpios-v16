@@ -17,16 +17,16 @@ export default function SalesDashboard() {
   return (
     <DashboardPage title="Sales Dashboard" subtitle="営業・パイプライン" kpis={SALES_KPIS}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-5">
-          <h3 className="text-sm font-medium text-gray-300 mb-4">MRR内訳（プロダクト別）</h3>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-5">
+          <h3 className="text-sm font-medium text-[var(--text-secondary)] mb-4">MRR内訳（プロダクト別）</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={MRR_BREAKDOWN} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
-                <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#6b7280' }} />
-                <YAxis tick={{ fontSize: 11, fill: '#6b7280' }} tickFormatter={(v) => `${v.toLocaleString()}万`} />
-                <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 12 }} formatter={(value) => [`${Number(value).toLocaleString()}万円`, 'MRR']} />
-                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }} />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }} tickFormatter={(v) => `${v.toLocaleString()}万`} />
+                <Tooltip contentStyle={{ background: 'var(--tooltip-bg)', border: '1px solid var(--tooltip-border)', borderRadius: 12, fontSize: 12 }} formatter={(value) => [`${Number(value).toLocaleString()}万円`, 'MRR']} />
+                <Bar dataKey="value" radius={[6, 6, 0, 0]}>
                   {MRR_BREAKDOWN.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                 </Bar>
               </BarChart>
@@ -34,16 +34,16 @@ export default function SalesDashboard() {
           </div>
         </div>
 
-        <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-5">
-          <h3 className="text-sm font-medium text-gray-300 mb-4">セールスファネル</h3>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-5">
+          <h3 className="text-sm font-medium text-[var(--text-secondary)] mb-4">セールスファネル</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={FUNNEL_DATA} layout="vertical" margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
-                <XAxis type="number" tick={{ fontSize: 11, fill: '#6b7280' }} />
-                <YAxis dataKey="stage" type="category" tick={{ fontSize: 11, fill: '#6b7280' }} width={60} />
-                <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151', borderRadius: 8, fontSize: 12 }} formatter={(value) => [`${value}件`, '']} />
-                <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                <XAxis type="number" tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }} />
+                <YAxis dataKey="stage" type="category" tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }} width={60} />
+                <Tooltip contentStyle={{ background: 'var(--tooltip-bg)', border: '1px solid var(--tooltip-border)', borderRadius: 12, fontSize: 12 }} formatter={(value) => [`${value}件`, '']} />
+                <Bar dataKey="value" fill="#3b82f6" radius={[0, 6, 6, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

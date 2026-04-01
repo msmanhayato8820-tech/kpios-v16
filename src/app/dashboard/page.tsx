@@ -9,40 +9,37 @@ import { NORTH_STAR, CEO_KPIS, P0_ACTIONS, KEY_DECISIONS, CEO_SUMMARY } from '@/
 
 export default function CeoDashboard() {
   const { user } = useAuth();
-
   const riskKpis = CEO_KPIS.filter((k) => k.status === 'risk');
-  const warningKpis = CEO_KPIS.filter((k) => k.status === 'warning');
-  const goodKpis = CEO_KPIS.filter((k) => k.status === 'good');
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-white">CEO Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">CEO Dashboard</h1>
+          <p className="text-sm text-[var(--text-tertiary)] mt-0.5">
             {user?.name} / 2026年3月 / 株式会社アネストシステム
           </p>
         </div>
         <div className="text-right">
-          <p className="text-xs text-gray-500">最終更新</p>
-          <p className="text-sm text-gray-400">2026-03-20</p>
+          <p className="text-xs text-[var(--text-tertiary)]">最終更新</p>
+          <p className="text-sm text-[var(--text-secondary)]">2026-03-20</p>
         </div>
       </div>
 
       {/* CEO Summary */}
-      <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-4">
-        <p className="text-sm text-gray-300 leading-relaxed">{CEO_SUMMARY}</p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-4">
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{CEO_SUMMARY}</p>
       </div>
 
       {/* Critical Alerts */}
       {riskKpis.length > 0 && (
-        <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4">
+        <div className="rounded-2xl border border-red-500/15 bg-red-500/[0.03] p-4">
           <h2 className="text-sm font-medium text-red-400 mb-3 flex items-center gap-2">
             <span className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
             要対応アラート（{riskKpis.length}件）
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {riskKpis.map((kpi) => (
               <KpiCard key={kpi.api_key} kpi={kpi} compact />
             ))}
@@ -55,8 +52,8 @@ export default function CeoDashboard() {
 
       {/* Main KPI Grid */}
       <div>
-        <h2 className="text-sm font-medium text-gray-400 mb-3">主要KPI</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <h2 className="text-sm font-medium text-[var(--text-tertiary)] mb-3">主要KPI</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {CEO_KPIS.filter((k) => !riskKpis.includes(k)).map((kpi) => (
             <KpiCard key={kpi.api_key} kpi={kpi} />
           ))}
@@ -68,9 +65,9 @@ export default function CeoDashboard() {
         <ArrChart />
 
         <div className="space-y-3">
-          <h2 className="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h2 className="text-sm font-medium text-[var(--text-tertiary)] flex items-center gap-2">
             P0/P1 アクション
-            <span className="text-xs text-gray-600">（即時〜今週中）</span>
+            <span className="text-xs text-[var(--text-tertiary)] opacity-60">（即時〜今週中）</span>
           </h2>
           {P0_ACTIONS.map((action, i) => (
             <ActionAlert key={i} action={action} />
@@ -80,23 +77,23 @@ export default function CeoDashboard() {
 
       {/* Key Decisions */}
       <div>
-        <h2 className="text-sm font-medium text-gray-400 mb-3">重要意思決定</h2>
+        <h2 className="text-sm font-medium text-[var(--text-tertiary)] mb-3">重要意思決定</h2>
         <div className="space-y-2">
           {KEY_DECISIONS.map((d, i) => (
-            <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-lg p-3 flex items-center gap-3">
-              <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium shrink-0 ${
-                d.priority === 'CRITICAL' ? 'bg-red-500/20 text-red-400' :
-                d.priority === 'HIGH' ? 'bg-amber-500/20 text-amber-400' :
-                'bg-gray-500/20 text-gray-400'
+            <div key={i} className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-3 flex items-center gap-3 transition-all hover:border-[var(--border-strong)]">
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium shrink-0 ${
+                d.priority === 'CRITICAL' ? 'bg-red-500/15 text-red-400' :
+                d.priority === 'HIGH' ? 'bg-amber-500/15 text-amber-400' :
+                'bg-[var(--hover-bg)] text-[var(--text-tertiary)]'
               }`}>{d.priority}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-gray-200 truncate">{d.title}</p>
-                <p className="text-xs text-gray-500">{d.owner} / 期限: {d.due_date}</p>
+                <p className="text-sm text-[var(--text-primary)] truncate">{d.title}</p>
+                <p className="text-xs text-[var(--text-tertiary)]">{d.owner} / 期限: {d.due_date}</p>
               </div>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                d.status === 'done' ? 'bg-emerald-500/20 text-emerald-400' :
-                d.status === 'in_progress' ? 'bg-blue-500/20 text-blue-400' :
-                'bg-gray-700 text-gray-300'
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-md shrink-0 ${
+                d.status === 'done' ? 'bg-emerald-500/15 text-emerald-400' :
+                d.status === 'in_progress' ? 'bg-blue-500/15 text-blue-400' :
+                'bg-[var(--hover-bg)] text-[var(--text-tertiary)]'
               }`}>{d.status === 'pending' ? '未着手' : d.status === 'in_progress' ? '進行中' : '完了'}</span>
             </div>
           ))}

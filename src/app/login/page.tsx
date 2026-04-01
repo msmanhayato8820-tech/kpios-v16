@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
+import { useTheme } from '@/lib/theme';
 import { MOCK_USERS } from '@/data/mock';
 
 export default function LoginPage() {
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -22,34 +24,50 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-blue-950 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] px-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white">KPIOS <span className="text-blue-400">v16</span></h1>
-          <p className="text-gray-400 mt-2">アネストシステム 経営ダッシュボード</p>
-          <p className="text-gray-500 text-sm mt-1">2035年 売上100億円へのデータドリブン経営</p>
+        {/* Theme toggle */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={toggleTheme}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--hover-bg)] transition-all"
+          >
+            {theme === 'dark' ? (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+            )}
+          </button>
         </div>
 
-        <div className="bg-gray-900/80 backdrop-blur border border-gray-800 rounded-xl p-8 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="text-center mb-8">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
+            <span className="text-white text-lg font-bold">K</span>
+          </div>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">KPIOS <span className="text-blue-500">v16</span></h1>
+          <p className="text-[var(--text-tertiary)] text-sm mt-1">アネストシステム 経営ダッシュボード</p>
+        </div>
+
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1.5">メールアドレス</label>
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">メールアドレス</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2.5 bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40 transition-all"
                 placeholder="ceo@anest.co.jp"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1.5">パスワード</label>
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">パスワード</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2.5 bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40 transition-all"
                 placeholder="••••••••"
                 required
               />
@@ -57,32 +75,32 @@ export default function LoginPage() {
             {error && <p className="text-red-400 text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-colors"
+              className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-medium rounded-xl transition-all shadow-lg shadow-blue-500/20"
             >
               ログイン
             </button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-gray-800">
-            <p className="text-xs text-gray-500 mb-3">デモアカウント（クリックで自動入力）</p>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="mt-6 pt-5 border-t border-[var(--border)]">
+            <p className="text-xs text-[var(--text-tertiary)] mb-3">デモアカウント（クリックで自動入力）</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {MOCK_USERS.map((u) => (
                 <button
                   key={u.email}
                   onClick={() => { setEmail(u.email); setPassword('demo'); setError(''); }}
-                  className="text-xs px-3 py-2 bg-gray-800/60 hover:bg-gray-700 border border-gray-700 rounded-lg text-gray-300 transition-colors text-left"
+                  className="text-xs px-3 py-2 bg-[var(--bg-primary)] hover:bg-[var(--hover-bg)] border border-[var(--border)] rounded-xl text-[var(--text-secondary)] transition-all text-left hover:border-[var(--border-strong)]"
                 >
-                  <span className="font-medium">{u.role}</span>
+                  <span className="font-medium text-[var(--text-primary)]">{u.role}</span>
                   <br />
-                  <span className="text-gray-500">{u.name}</span>
+                  <span className="text-[var(--text-tertiary)]">{u.name}</span>
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        <p className="text-center text-gray-600 text-xs mt-6">
-          Powered by Amazon Cognito (mock mode)
+        <p className="text-center text-[var(--text-tertiary)] text-xs mt-6 opacity-60">
+          Powered by Next.js + Vercel
         </p>
       </div>
     </div>
