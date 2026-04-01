@@ -32,17 +32,24 @@ function SliderInput({
 }
 
 function simulate(params: SimulatorParams) {
-  const { customers, monthlyNetNew, arpu, growthRate, churnRate } = params;
+  const { customers, monthlyNetNew, arpu, churnRate } = params;
   const years: { year: number; arr: number; vehicles: number; customers: number }[] = [];
   let currentCustomers = customers;
-  let currentArr = (customers * arpu) / 10000; // 万円 → 億円
+  const vehiclesPerCustomer = params.managedVehicles / customers;
 
   for (let y = 2026; y <= 2035; y++) {
-    const monthlyChurn = Math.round(currentCustomers * (churnRate / 100));
-    const netNewAnnual = (monthlyNetNew - monthlyChurn) * 12;
-    currentCustomers = Math.max(0, currentCustomers + netNewAnnual);
-    currentArr = (currentCustomers * arpu) / 10000;
-    const vehiclesPerCustomer = params.managedVehicles / customers;
+    // チャーン率は年率 → 月率に変換
+    const monthlyChurnRate = churnRate / 100 / 12;
+    let yearEndCustomers = currentCustomers;
+
+    for (let m = 0; m < 12; m++) {
+      const monthlyChurn = Math.round(yearEndCustomers * monthlyChurnRate);
+      yearEndCustomers = yearEndCustomers + monthlyNetNew - monthlyChurn;
+    }
+
+    currentCustomers = Math.max(0, yearEndCustomers);
+    const currentArr = (currentCustomers * arpu) / 10000; // 万円 → 億円
+
     years.push({
       year: y,
       arr: Math.round(currentArr * 10) / 10,
