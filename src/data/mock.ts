@@ -259,6 +259,81 @@ export const ARR_HISTORY = [
   { month: '2026-03', arr: 27.0 },
 ];
 
+// CFO KPIs
+export const CFO_KPIS: Kpi[] = [
+  { api_key: 'arr', name: '推定ARR', category: 'CFO', value: 27, target: 27, unit: '億円', status: 'good', mom_change: '+5%', is_displayed_in: ['CFO'], confidence: 'high', definition: { numerator: '月次MRR合計 × 12', denominator: '−', scope: 'PL', note: '', source: 'calculated', refresh_cycle: 'monthly' } },
+  { api_key: 'gross_margin_pct', name: '粗利率', category: 'CFO', value: 76.3, target: 75, unit: '%', status: 'good', mom_change: '+1.2pt', is_displayed_in: ['CFO'], confidence: 'high', definition: { numerator: '売上高 − 売上原価', denominator: '売上高', scope: 'PL', note: 'SaaS粗利率', source: 'monthly_pl', refresh_cycle: 'monthly' } },
+  { api_key: 'operating_margin_pct', name: '営業利益率', category: 'CFO', value: 5, target: 5, unit: '%', status: 'good', mom_change: '+0.8pt', is_displayed_in: ['CFO'], priority: 'MEDIUM', owner: 'CFO', confidence: 'high', definition: { numerator: '営業利益', denominator: '売上高', scope: 'PL', note: '5%=目標達成', source: 'monthly_pl', refresh_cycle: 'monthly' } },
+  { api_key: 'opex_total', name: 'OPEX合計', category: 'CFO', value: 5.5, target: 5.5, unit: '億円', status: 'good', mom_change: '-2%', is_displayed_in: ['CFO'], confidence: 'high', definition: { numerator: '管理部門・固定費コスト合計', denominator: '−', scope: 'OPEX', note: '', source: 'monthly_pl', refresh_cycle: 'monthly' } },
+  { api_key: 'cash_balance', name: 'キャッシュ残高', category: 'CFO', value: 2, target: 2.5, unit: '億円', status: 'warning', mom_change: '+5%', is_displayed_in: ['CFO'], priority: 'MEDIUM', confidence: 'high', definition: { numerator: '月末時点の現預金残高', denominator: '−', scope: 'PL', note: '手元流動性', source: 'bank_statement', refresh_cycle: 'monthly' } },
+  { api_key: 'cfo_burn_rate', name: 'バーンレート', category: 'CFO', value: 4500, target: 4000, unit: '万円/月', status: 'warning', mom_change: '+3%', is_displayed_in: ['CFO'], confidence: 'medium', definition: { numerator: '月次キャッシュ流出額', denominator: '−', scope: 'PL', note: '', source: 'monthly_pl', refresh_cycle: 'monthly' } },
+  { api_key: 'cfo_runway', name: 'ランウェイ', category: 'CFO', value: 4.4, target: 6, unit: 'ヶ月', status: 'warning', mom_change: '-0.2ヶ月', is_displayed_in: ['CFO'], priority: 'HIGH', confidence: 'medium', definition: { numerator: 'キャッシュ残高', denominator: 'バーンレート', scope: 'PL', note: '', source: 'calculated', refresh_cycle: 'monthly' } },
+  { api_key: 'revenue_annual', name: '推定年商', category: 'CFO', value: 27, target: 27, unit: '億円', status: 'good', mom_change: '+35% YoY', is_displayed_in: ['CFO'], confidence: 'high', definition: { numerator: '当期累計売上高', denominator: '−', scope: 'PL', note: '', source: 'monthly_pl', refresh_cycle: 'monthly' } },
+];
+
+// Sales KPIs
+export const SALES_KPIS: Kpi[] = [
+  { api_key: 'new_customers', name: '新規獲得企業数', category: 'Sales', value: 80, target: 100, unit: '件/月', status: 'warning', mom_change: '+10件', is_displayed_in: ['Sales'], is_growth_driver: true, priority: 'HIGH', confidence: 'high', definition: { numerator: '当月新規契約成立件数', denominator: '−', scope: 'Sales', note: '', source: 'salesforce', refresh_cycle: 'weekly' } },
+  { api_key: 'mrr_net', name: 'Net New MRR', category: 'Sales', value: 800, target: 1000, unit: '万円', status: 'warning', mom_change: '+200万', is_displayed_in: ['Sales'], confidence: 'high', definition: { numerator: '新規MRR + Expansion − Churn', denominator: '−', scope: 'PL', note: '', source: 'calculated', refresh_cycle: 'monthly' } },
+  { api_key: 'pipeline_leads', name: 'リード数（月次）', category: 'Sales', value: 200, target: 220, unit: '件', status: 'warning', mom_change: '+10件', is_displayed_in: ['Sales'], confidence: 'medium', definition: { numerator: 'アクティブリード数', denominator: '−', scope: 'Sales', note: '', source: 'salesforce', refresh_cycle: 'weekly' } },
+  { api_key: 'meeting_rate', name: '商談化率', category: 'Sales', value: 30, target: 35, unit: '%', status: 'warning', mom_change: '+1pt', is_displayed_in: ['Sales'], confidence: 'medium', definition: { numerator: '商談化件数', denominator: 'リード数', scope: 'Sales', note: '', source: 'salesforce', refresh_cycle: 'weekly' } },
+  { api_key: 'close_rate', name: '受注率', category: 'Sales', value: 20, target: 25, unit: '%', status: 'warning', mom_change: '+1pt', is_displayed_in: ['Sales'], confidence: 'medium', definition: { numerator: '受注件数', denominator: '商談件数', scope: 'Sales', note: '', source: 'salesforce', refresh_cycle: 'weekly' } },
+  { api_key: 'pipeline_value', name: 'パイプライン総額', category: 'Sales', value: 4500, target: 5000, unit: '万円', status: 'warning', mom_change: '+300万', is_displayed_in: ['Sales'], confidence: 'medium', definition: { numerator: '全アクティブ商談の期待金額合計', denominator: '−', scope: 'Sales', note: '', source: 'salesforce', refresh_cycle: 'weekly' } },
+  { api_key: 'nrr_pct', name: 'NRR', category: 'Sales', value: 112, target: 115, unit: '%', status: 'good', mom_change: '+1pt', is_displayed_in: ['Sales'], confidence: 'high', definition: { numerator: '前期末ARR + Expansion − Churn', denominator: '前期末ARR', scope: 'Unit Economics', note: '', source: 'kintone', refresh_cycle: 'monthly' } },
+  { api_key: 'churn_rate_pct', name: 'Churn Rate', category: 'Sales', value: 1, target: 1.5, unit: '%', status: 'good', mom_change: '-0.2pt', is_displayed_in: ['Sales'], confidence: 'high', definition: { numerator: '解約MRR', denominator: '前月末MRR', scope: 'Unit Economics', note: '', source: 'kintone', refresh_cycle: 'monthly' } },
+  { api_key: 'denso_concentration', name: 'Denso売上集中度', category: 'Sales', value: 75, target: 50, unit: '%', status: 'risk', mom_change: '-2pt', is_displayed_in: ['Sales'], priority: 'CRITICAL', confidence: 'high', definition: { numerator: 'Denso経由売上', denominator: '全売上', scope: 'Sales', note: '', source: 'manual', refresh_cycle: 'monthly' } },
+];
+
+export const MRR_BREAKDOWN = [
+  { name: 'Fleet (GBC/GBCDR)', value: 8333 },
+  { name: 'BSS', value: 6667 },
+  { name: 'ALC', value: 5000 },
+  { name: '新サービス', value: 2500 },
+];
+
+// CS KPIs
+export const CS_KPIS: Kpi[] = [
+  { api_key: 'customer_health_score', name: '顧客健全性スコア', category: 'CS', value: 78, target: 80, unit: '点', status: 'warning', mom_change: '+2pt', is_displayed_in: ['CS'], priority: 'HIGH', confidence: 'medium', definition: { numerator: '複合スコア', denominator: '100点満点', scope: 'CS', note: '解約リスクの先行複合指標', source: 'crm_kintone', refresh_cycle: 'weekly' } },
+  { api_key: 'high_risk_accounts', name: 'ハイリスクアカウント', category: 'CS', value: 12, target: 5, unit: '社', status: 'risk', mom_change: '+4社', is_displayed_in: ['CS'], priority: 'CRITICAL', owner: 'CS部長', next_action: '全12社に個別レスキュープランを発動', confidence: 'medium', definition: { numerator: 'ヘルススコア閾値以下の顧客数', denominator: '−', scope: 'CS', note: '1社解約≒MRR150万円喪失', source: 'crm_kintone', refresh_cycle: 'weekly' } },
+  { api_key: 'cs_sla_violation_rate', name: 'SLA違反率', category: 'CS', value: 8, target: 5, unit: '%', status: 'warning', mom_change: '+3pt', is_displayed_in: ['CS'], priority: 'CRITICAL', confidence: 'high', definition: { numerator: 'SLA超過チケット数', denominator: '総チケット数', scope: 'CS', note: '', source: 'ticketing_system', refresh_cycle: 'daily' } },
+  { api_key: 'cs_renewal_rate', name: '契約更新率', category: 'CS', value: 88, target: 95, unit: '%', status: 'risk', mom_change: '-2pt', is_displayed_in: ['CS'], priority: 'HIGH', confidence: 'high', definition: { numerator: '更新顧客数', denominator: '更新対象顧客数', scope: 'CS', note: '', source: 'crm_kintone', refresh_cycle: 'monthly' } },
+  { api_key: 'cs_active_rate', name: 'アクティブ率', category: 'CS', value: 72, target: 80, unit: '%', status: 'warning', mom_change: '-3pt', is_displayed_in: ['CS'], priority: 'HIGH', next_action: '未ログイン30日以上の顧客にCSからプロアクティブ連絡', confidence: 'medium', definition: { numerator: '過去30日ログインユーザー数', denominator: '総契約ユーザー数', scope: 'CS', note: '', source: 'product_analytics', refresh_cycle: 'weekly' } },
+  { api_key: 'cs_onboarding_complete', name: 'オンボーディング完了率', category: 'CS', value: 84, target: 90, unit: '%', status: 'warning', mom_change: '+4pt', is_displayed_in: ['CS'], confidence: 'medium', definition: { numerator: 'オンボーディング完了顧客数', denominator: '新規契約顧客数', scope: 'CS', note: '', source: 'crm_kintone', refresh_cycle: 'weekly' } },
+  { api_key: 'support_resolution_rate', name: 'チケット解決率', category: 'CS', value: 93, target: 95, unit: '%', status: 'warning', mom_change: '+1pt', is_displayed_in: ['CS'], confidence: 'high', definition: { numerator: '解決済みチケット数', denominator: '総チケット数', scope: 'CS', note: '', source: 'ticketing_system', refresh_cycle: 'weekly' } },
+  { api_key: 'cs_avg_response_time', name: '平均応答時間', category: 'CS', value: 18, target: 24, unit: '時間', status: 'good', mom_change: '-4h', is_displayed_in: ['CS'], confidence: 'high', definition: { numerator: '応答時間合計', denominator: '対応チケット件数', scope: 'CS', note: '低いほど良い', source: 'ticketing_system', refresh_cycle: 'daily' } },
+  { api_key: 'upsell_rate', name: 'アップセル率', category: 'CS', value: 12, target: 15, unit: '%', status: 'warning', mom_change: '+1pt', is_displayed_in: ['CS'], confidence: 'medium', definition: { numerator: 'アップセル成立件数', denominator: '既存顧客数', scope: 'Unit Economics', note: '', source: 'salesforce', refresh_cycle: 'monthly' } },
+  { api_key: 'cs_rescue_plan_progress', name: 'レスキュープラン実行率', category: 'CS', value: 42, target: 100, unit: '%', status: 'risk', mom_change: '+15pt', is_displayed_in: ['CS'], priority: 'CRITICAL', next_action: '未着手7社のレスキュープランを今週中に発動', confidence: 'medium', definition: { numerator: '実行済み顧客数', denominator: 'ハイリスク顧客数', scope: 'CS', note: '', source: 'crm_kintone', refresh_cycle: 'weekly' } },
+];
+
+// HR KPIs
+export const HR_KPIS: Kpi[] = [
+  { api_key: 'employees', name: '従業員数', category: 'HR', value: 80, target: 90, unit: '名', status: 'good', mom_change: '+3名', is_displayed_in: ['HR'], confidence: 'high', definition: { numerator: '月末在籍者数', denominator: '−', scope: 'HR', note: '', source: 'hr_system', refresh_cycle: 'monthly' } },
+  { api_key: 'hires_ytd', name: '採用進捗（YTD）', category: 'HR', value: 16, target: 26, unit: '名', status: 'warning', mom_change: '+2名', is_displayed_in: ['HR'], priority: 'HIGH', next_action: 'BizReachスカウト倍増＋開発JD刷新', confidence: 'high', definition: { numerator: '年度累計の採用入社者数', denominator: '−', scope: 'HR', note: '', source: 'hr_system', refresh_cycle: 'monthly' } },
+  { api_key: 'attrition_rate', name: '離職率', category: 'HR', value: 8, target: 10, unit: '%', status: 'good', mom_change: '-1pt', is_displayed_in: ['HR'], confidence: 'high', definition: { numerator: '当期退職者数', denominator: '期初在籍者数', scope: 'HR', note: '低いほど良い', source: 'hr_system', refresh_cycle: 'monthly' } },
+  { api_key: 'sales_per_head', name: '1人あたり売上', category: 'HR', value: 281, target: 300, unit: '万円/月', status: 'warning', mom_change: '+12万', is_displayed_in: ['HR'], confidence: 'medium', definition: { numerator: '月次売上高', denominator: '全従業員数', scope: 'Unit Economics', note: '', source: 'calculated', refresh_cycle: 'monthly' } },
+  { api_key: 'recruitment_lead_time', name: '採用リードタイム', category: 'HR', value: 42, target: 30, unit: '日', status: 'warning', mom_change: '-3日', is_displayed_in: ['HR'], confidence: 'medium', definition: { numerator: '求人掲載日から内定承諾日', denominator: '−', scope: 'HR', note: '低いほど良い', source: 'hr_system', refresh_cycle: 'monthly' } },
+  { api_key: 'offer_acceptance_rate', name: '内定承諾率', category: 'HR', value: 78, target: 85, unit: '%', status: 'warning', mom_change: '+3pt', is_displayed_in: ['HR'], next_action: 'オファー面談強化＋報酬レンジ見直し', confidence: 'medium', definition: { numerator: '内定承諾者数', denominator: '内定通知者数', scope: 'HR', note: '', source: 'hr_system', refresh_cycle: 'monthly' } },
+  { api_key: 'recruitment_unit_cost', name: '採用単価', category: 'HR', value: 45, target: 40, unit: '万円/人', status: 'warning', mom_change: '-3万', is_displayed_in: ['HR'], confidence: 'medium', definition: { numerator: '採用関連費用合計', denominator: '採用入社者数', scope: 'OPEX', note: '低いほど良い', source: 'hr_system', refresh_cycle: 'monthly' } },
+  { api_key: 'labor_cost_ratio', name: '人件費率', category: 'HR', value: 62, target: 60, unit: '%', status: 'warning', mom_change: '-1pt', is_displayed_in: ['HR'], next_action: '業務委託比率見直し', confidence: 'medium', definition: { numerator: '人件費総額', denominator: 'OPEX合計', scope: 'OPEX', note: '', source: 'monthly_pl', refresh_cycle: 'monthly' } },
+];
+
+export const DEPT_BREAKDOWN = [
+  { name: '営業', headcount: 15, productivity: 450 },
+  { name: '開発', headcount: 30, productivity: 280 },
+  { name: 'サポート', headcount: 28, productivity: 230 },
+  { name: '管理', headcount: 7, productivity: 210 },
+];
+
+// Ops KPIs
+export const OPS_KPIS: Kpi[] = [
+  { api_key: 'support_tickets', name: 'サポートチケット数', category: 'Ops', value: 750, target: 600, unit: '件', status: 'warning', mom_change: '+3%', is_displayed_in: ['Ops'], priority: 'MEDIUM', confidence: 'high', definition: { numerator: '月次新規チケット数', denominator: '−', scope: 'Ops', note: '少ないほど良い', source: 'ticketing_system', refresh_cycle: 'daily' } },
+  { api_key: 'sla_violation_rate', name: 'SLA違反率', category: 'Ops', value: 8, target: 3, unit: '%', status: 'risk', mom_change: '+1pt', is_displayed_in: ['Ops'], priority: 'HIGH', owner: 'Ops部長', confidence: 'medium', definition: { numerator: 'SLA超過チケット数', denominator: '全チケット数', scope: 'Ops', note: '', source: 'kintone', refresh_cycle: 'weekly' } },
+  { api_key: 'installation_time', name: '設置リードタイム', category: 'Ops', value: 14, target: 12, unit: '日', status: 'warning', mom_change: '-2日', is_displayed_in: ['Ops'], confidence: 'medium', definition: { numerator: '設置完了までの平均所要日数', denominator: '−', scope: 'Ops', note: '低いほど良い', source: 'growthbox_ops', refresh_cycle: 'weekly' } },
+  { api_key: 'installation_delay_months', name: '設置遅延月数', category: 'Ops', value: 2, target: 0, unit: 'ヶ月', status: 'risk', mom_change: '±0', is_displayed_in: ['Ops'], priority: 'HIGH', confidence: 'medium', definition: { numerator: '設置予定日超過月数', denominator: '−', scope: 'Ops', note: 'ゼロが目標', source: 'growthbox_ops', refresh_cycle: 'weekly' } },
+  { api_key: 'managed_vehicles', name: '管理車両数', category: 'Ops', value: 95000, target: 130000, unit: '台', status: 'good', mom_change: '+3%', is_displayed_in: ['Ops'], confidence: 'high', definition: { numerator: 'GrowthBOX管理車両台数合計', denominator: '−', scope: 'Ops', note: '', source: 'manual', refresh_cycle: 'monthly' } },
+  { api_key: 'ops_backlog', name: 'バックログ', category: 'Ops', value: 180, target: 100, unit: '件', status: 'risk', mom_change: '+15件', is_displayed_in: ['Ops'], priority: 'HIGH', next_action: '開発リソース増強で消化加速', confidence: 'medium', definition: { numerator: '未処理タスク数', denominator: '−', scope: 'Ops', note: '少ないほど良い', source: 'jira', refresh_cycle: 'weekly' } },
+];
+
 export const DEFAULT_SIMULATOR_PARAMS = {
   managedVehicles: 95000,
   customers: 10000,
