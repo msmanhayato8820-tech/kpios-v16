@@ -340,5 +340,5 @@ export const DEFAULT_SIMULATOR_PARAMS = {
   monthlyNetNew: 62,
   arpu: 27,
   growthRate: 35,
-  churnRate: 1.8,
+  churnRate: 1.0,
 };
