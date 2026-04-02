@@ -2,7 +2,7 @@
 
 import { ALL_DEPARTMENT_KPIS } from '@/data/mock';
 
-const STATUS_COLORS = {
+const STATUS_COLORS: Record<string, string> = {
   good: 'bg-emerald-500/70',
   warning: 'bg-amber-500/70',
   risk: 'bg-red-500/70',

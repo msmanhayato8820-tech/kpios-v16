@@ -334,6 +334,196 @@ export const OPS_KPIS: Kpi[] = [
   { api_key: 'ops_backlog', name: 'バックログ', category: 'Ops', value: 180, target: 100, unit: '件', status: 'risk', mom_change: '+15件', is_displayed_in: ['Ops'], priority: 'HIGH', next_action: '開発リソース増強で消化加速', confidence: 'medium', definition: { numerator: '未処理タスク数', denominator: '−', scope: 'Ops', note: '少ないほど良い', source: 'jira', refresh_cycle: 'weekly' } },
 ];
 
+// 6ヶ月トレンドデータ (10月〜3月)
+export const KPI_TRENDS: Record<string, number[]> = {
+  arr:                  [22, 23, 24, 25, 26, 27],
+  nrr_pct:             [108, 109, 110, 111, 112, 112],
+  churn_rate_pct:      [1.4, 1.3, 1.2, 1.1, 1.0, 1.0],
+  managed_vehicles:    [80000, 83000, 86000, 89000, 92000, 95000],
+  denso_concentration: [82, 80, 79, 77, 76, 75],
+  sla_violation_rate:  [4, 5, 6, 7, 7, 8],
+  high_risk_accounts:  [6, 7, 8, 9, 11, 12],
+  new_customers:       [60, 65, 70, 72, 75, 80],
+  gross_margin_pct:    [74, 74.5, 75, 75.5, 76, 76.3],
+  operating_margin_pct:[3, 3.5, 4, 4.2, 4.8, 5],
+  cash_balance:        [2.5, 2.4, 2.3, 2.2, 2.1, 2.0],
+  cfo_burn_rate:       [3800, 3900, 4000, 4200, 4400, 4500],
+  cfo_runway:          [5.5, 5.2, 5.0, 4.8, 4.6, 4.4],
+  pipeline_leads:      [170, 180, 185, 190, 195, 200],
+  meeting_rate:        [26, 27, 28, 29, 30, 30],
+  close_rate:          [17, 18, 18, 19, 20, 20],
+  pipeline_value:      [3500, 3800, 4000, 4100, 4300, 4500],
+  customer_health_score:[72, 73, 74, 75, 77, 78],
+  cs_sla_violation_rate:[4, 5, 5, 6, 7, 8],
+  cs_renewal_rate:     [93, 92, 91, 90, 89, 88],
+};
+
+// 関連KPI
+export const KPI_DEPENDENCIES: Record<string, string[]> = {
+  arr:                  ['NRR', 'Churn Rate', '新規獲得企業数'],
+  nrr_pct:             ['Churn Rate', 'Expansion MRR', '顧客健全性スコア'],
+  churn_rate_pct:      ['顧客健全性スコア', 'ハイリスクアカウント', '契約更新率'],
+  managed_vehicles:    ['ARR', '新規獲得企業数'],
+  denso_concentration: ['ARR', '新規獲得企業数'],
+  sla_violation_rate:  ['顧客健全性スコア', 'ハイリスクアカウント'],
+  high_risk_accounts:  ['Churn Rate', '契約更新率', '顧客健全性スコア'],
+  new_customers:       ['パイプライン総額', '商談化率', '受注率'],
+  gross_margin_pct:    ['ARR', 'OPEX合計'],
+  operating_margin_pct:['粗利率', 'OPEX合計'],
+  cash_balance:        ['バーンレート', 'ランウェイ'],
+  cfo_burn_rate:       ['ランウェイ', 'OPEX合計'],
+  cfo_runway:          ['キャッシュ残高', 'バーンレート'],
+  pipeline_leads:      ['商談化率', '受注率'],
+  meeting_rate:        ['リード数', '受注率'],
+  close_rate:          ['商談化率', 'パイプライン総額'],
+  pipeline_value:      ['リード数', '商談化率', '受注率'],
+  customer_health_score:['Churn Rate', 'SLA違反率', 'ハイリスクアカウント'],
+  cs_sla_violation_rate:['顧客健全性スコア', 'ハイリスクアカウント'],
+  cs_renewal_rate:     ['顧客健全性スコア', 'Churn Rate'],
+};
+
+// 部門横断KPIヒートマップ用
+export const ALL_DEPARTMENT_KPIS: Record<string, { api_key: string; name: string; value: number | null; target: number; unit: string; status: string }[]> = {
+  CEO:   [
+    { api_key: 'arr', name: 'ARR', value: 27, target: 27, unit: '億円', status: 'good' },
+    { api_key: 'nrr_pct', name: 'NRR', value: 112, target: 115, unit: '%', status: 'good' },
+    { api_key: 'churn_rate_pct', name: 'Churn', value: 1.0, target: 1.5, unit: '%', status: 'good' },
+    { api_key: 'managed_vehicles', name: '管理車両', value: 95000, target: 130000, unit: '台', status: 'good' },
+    { api_key: 'denso_concentration', name: 'Denso集中', value: 75, target: 50, unit: '%', status: 'risk' },
+  ],
+  CFO:   [
+    { api_key: 'gross_margin_pct', name: '粗利率', value: 76.3, target: 75, unit: '%', status: 'good' },
+    { api_key: 'operating_margin_pct', name: '営業利益率', value: 5, target: 5, unit: '%', status: 'good' },
+    { api_key: 'cash_balance', name: 'キャッシュ', value: 2, target: 2.5, unit: '億円', status: 'warning' },
+    { api_key: 'cfo_burn_rate', name: 'バーン', value: 4500, target: 4000, unit: '万円', status: 'warning' },
+    { api_key: 'cfo_runway', name: 'ランウェイ', value: 4.4, target: 6, unit: 'ヶ月', status: 'warning' },
+  ],
+  Sales: [
+    { api_key: 'new_customers', name: '新規獲得', value: 80, target: 100, unit: '件', status: 'warning' },
+    { api_key: 'pipeline_leads', name: 'リード', value: 200, target: 220, unit: '件', status: 'warning' },
+    { api_key: 'meeting_rate', name: '商談化率', value: 30, target: 35, unit: '%', status: 'warning' },
+    { api_key: 'close_rate', name: '受注率', value: 20, target: 25, unit: '%', status: 'warning' },
+    { api_key: 'pipeline_value', name: 'パイプライン', value: 4500, target: 5000, unit: '万円', status: 'warning' },
+  ],
+  CS:    [
+    { api_key: 'customer_health_score', name: '健全性', value: 78, target: 80, unit: '点', status: 'warning' },
+    { api_key: 'high_risk_accounts', name: 'ハイリスク', value: 12, target: 5, unit: '社', status: 'risk' },
+    { api_key: 'cs_sla_violation_rate', name: 'SLA違反', value: 8, target: 5, unit: '%', status: 'warning' },
+    { api_key: 'cs_renewal_rate', name: '更新率', value: 88, target: 95, unit: '%', status: 'risk' },
+  ],
+  HR:    [
+    { api_key: 'headcount', name: '社員数', value: 45, target: 60, unit: '名', status: 'warning' },
+    { api_key: 'retention_rate', name: '定着率', value: 92, target: 90, unit: '%', status: 'good' },
+    { api_key: 'eng_ratio', name: 'エンジニア比率', value: 38, target: 40, unit: '%', status: 'warning' },
+  ],
+  Ops:   [
+    { api_key: 'sla_violation_rate', name: 'SLA違反', value: 8, target: 3, unit: '%', status: 'risk' },
+    { api_key: 'managed_vehicles', name: '管理車両', value: 95000, target: 130000, unit: '台', status: 'good' },
+    { api_key: 'ops_backlog', name: 'バックログ', value: 180, target: 100, unit: '件', status: 'risk' },
+    { api_key: 'installation_time', name: '設置LT', value: 14, target: 12, unit: '日', status: 'warning' },
+  ],
+};
+
+// プロダクトライン
+export const PRODUCT_LINES = [
+  { id: 'gbc',       shortName: 'GBC',       description: 'GrowthBOX Core',    color: '#3b82f6', currentArr: 12, targetArr2035: 35 },
+  { id: 'gbcdr',     shortName: 'GBCDR',     description: 'GBC + ドラレコ',    color: '#6366f1', currentArr: 5,  targetArr2035: 18 },
+  { id: 'bss',       shortName: 'BSS',       description: 'BSS点呼',           color: '#10b981', currentArr: 6,  targetArr2035: 20 },
+  { id: 'bssforalc', shortName: 'BSSforALC', description: 'アルコール検知',   color: '#f59e0b', currentArr: 3,  targetArr2035: 12 },
+  { id: 'new_svc',   shortName: '新サービス', description: '次世代サービス',   color: '#8b5cf6', currentArr: 1,  targetArr2035: 10 },
+  { id: 'new_prod',  shortName: '新製品',     description: 'ハードウェア',     color: '#ef4444', currentArr: 0,  targetArr2035: 5  },
+];
+
+// 100億ロードマップ（積み上げ棒グラフ用）
+export const PRODUCT_ROADMAP = [
+  { year: 2025, GBC: 13, GBCDR: 5,  BSS: 6,  BSSforALC: 3, '新サービス': 0, '新製品': 0 },
+  { year: 2026, GBC: 16, GBCDR: 7,  BSS: 8,  BSSforALC: 4, '新サービス': 1, '新製品': 0 },
+  { year: 2027, GBC: 19, GBCDR: 9,  BSS: 10, BSSforALC: 5, '新サービス': 2, '新製品': 1 },
+  { year: 2028, GBC: 22, GBCDR: 11, BSS: 12, BSSforALC: 7, '新サービス': 4, '新製品': 2 },
+  { year: 2029, GBC: 25, GBCDR: 13, BSS: 14, BSSforALC: 8, '新サービス': 5, '新製品': 2 },
+  { year: 2030, GBC: 28, GBCDR: 15, BSS: 16, BSSforALC: 9, '新サービス': 7, '新製品': 3 },
+  { year: 2031, GBC: 30, GBCDR: 16, BSS: 17, BSSforALC: 10, '新サービス': 8, '新製品': 3 },
+  { year: 2032, GBC: 32, GBCDR: 17, BSS: 18, BSSforALC: 11, '新サービス': 9, '新製品': 4 },
+  { year: 2033, GBC: 33, GBCDR: 17, BSS: 19, BSSforALC: 11, '新サービス': 9, '新製品': 4 },
+  { year: 2034, GBC: 34, GBCDR: 18, BSS: 19, BSSforALC: 12, '新サービス': 10, '新製品': 5 },
+  { year: 2035, GBC: 35, GBCDR: 18, BSS: 20, BSSforALC: 12, '新サービス': 10, '新製品': 5 },
+];
+
+// 100億宣言 戦略目標
+export interface StrategicGoal {
+  id: string;
+  number: number;
+  title: string;
+  progress: number;
+  status: 'on_track' | 'at_risk' | 'behind';
+  keyMetrics: { label: string; current: string; target: string }[];
+  challenges: string[];
+  measures: string[];
+}
+
+export const STRATEGIC_GOALS: StrategicGoal[] = [
+  {
+    id: 'goal1', number: 1,
+    title: '管理車両数 13万台達成（2030年）',
+    progress: 73,
+    status: 'on_track',
+    keyMetrics: [
+      { label: '現在', current: '95,000台', target: '130,000台' },
+      { label: '月次純増', current: '約800台', target: '1,200台' },
+    ],
+    challenges: ['Denso経由販売への依存（売上75%集中）', '自社直販チャネルが未確立'],
+    measures: ['パートナー戦略でDealer網を拡充', '直販チームを2026年Q1に組成'],
+  },
+  {
+    id: 'goal2', number: 2,
+    title: 'ARR 100億円（2035年）',
+    progress: 27,
+    status: 'at_risk',
+    keyMetrics: [
+      { label: '現在ARR', current: '27億円', target: '100億円' },
+      { label: 'ARPU', current: '27万円/年', target: '65万円/年' },
+    ],
+    challenges: ['ARPU単価が目標の約40%水準', 'クロスセル率が低い'],
+    measures: ['BSSforALC + GBC バンドル展開', '大口顧客へのエンタープライズプラン策定'],
+  },
+  {
+    id: 'goal3', number: 3,
+    title: 'NRR 120%達成',
+    progress: 55,
+    status: 'at_risk',
+    keyMetrics: [
+      { label: '現在NRR', current: '112%', target: '120%' },
+      { label: 'Churn率', current: '1.0%', target: '0.8%' },
+    ],
+    challenges: ['ハイリスクアカウント12社が解約リスク', 'CS人員が不足'],
+    measures: ['CS部門増員（2名採用）', 'ハイリスク12社に専任CSM配置'],
+  },
+  {
+    id: 'goal4', number: 4,
+    title: 'Denso売上集中度 50%以下',
+    progress: 40,
+    status: 'behind',
+    keyMetrics: [
+      { label: '現在', current: '75%', target: '50%以下' },
+      { label: '直販比率', current: '25%', target: '50%' },
+    ],
+    challenges: ['Denso依存からの脱却に時間軸が必要', '新規パートナー開拓が遅延'],
+    measures: ['2026年中に新規代理店10社との契約締結', '自社展示会・セミナーの年4回開催'],
+  },
+  {
+    id: 'goal5', number: 5,
+    title: '新規月次獲得 100社/月',
+    progress: 80,
+    status: 'at_risk',
+    keyMetrics: [
+      { label: '現在', current: '80社/月', target: '100社/月' },
+      { label: 'パイプライン', current: '4,500万円', target: '5,000万円' },
+    ],
+    challenges: ['商談化率が30%（目標35%）', 'SDR人員が不足'],
+    measures: ['インサイドセールス2名採用', 'ABM施策でエンタープライズ開拓強化'],
+  },
+];
+
 export const DEFAULT_SIMULATOR_PARAMS = {
   managedVehicles: 95000,
   customers: 10000,
