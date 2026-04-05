@@ -51,16 +51,48 @@ export interface Action {
   last_updated_at?: string;
 }
 
+export type DecisionStatus = 'draft' | 'pending' | 'in_progress' | 'done' | 'cancelled';
+export type OutcomeEvaluation = 'success' | 'partial' | 'failure' | 'pending';
+
+export interface DecisionOption {
+  label: string;
+  pros: string[];
+  cons: string[];
+  estimated_impact: string;
+  cost?: string;
+  risk_level: Priority;
+}
+
 export interface Decision {
+  id: string;
   title: string;
   date: string;
   priority: Priority;
-  status: 'pending' | 'in_progress' | 'done';
+  status: DecisionStatus;
+
+  // 判断支援
+  context: string;
+  options: DecisionOption[];
+  selected_option?: number;
+  decision_rationale?: string;
+
+  // リスク・インパクト
   impact: string;
   impact_level: Priority;
+  risks: string[];
+
+  // 責任・期限
   owner: string;
+  stakeholders: string[];
   due_date: string;
+  decided_at?: string;
+
+  // 追跡
   category: string;
+  linked_kpis: string[];
+  linked_actions: string[];
+  outcome?: string;
+  outcome_evaluation?: OutcomeEvaluation;
 }
 
 export interface User {
@@ -76,4 +108,56 @@ export interface SimulatorParams {
   arpu: number;
   growthRate: number;
   churnRate: number;
+}
+
+// 100億宣言シミュレーター用
+export interface SegmentParams {
+  name: string;
+  color: string;
+  currentRevenue: number; // 現在の年間売上（億円）
+  growthRate: number;     // 年間成長率（%）
+  enabled: boolean;
+}
+
+export interface Hyaku10SimParams {
+  segments: SegmentParams[];
+  // 全社パラメーター
+  headcount: number;
+  revenuePerHead: number; // 1人あたり売上（万円）
+  operatingMarginTarget: number; // 営業利益率目標（%）
+}
+
+// 財務ダッシュボード
+export interface MonthlyFinance {
+  month: string;       // '2026-01' etc.
+  label: string;       // '1月' etc.
+  revenuePlan: number; // 売上計画（万円）
+  revenueActual: number | null; // 売上実績
+  revenueForecast: number; // 売上見込み
+  costPlan: number;    // コスト計画
+  costActual: number | null; // コスト実績
+  costForecast: number; // コスト見込み
+  profitPlan: number;  // 利益計画
+  profitActual: number | null; // 利益実績
+  profitForecast: number; // 利益見込み
+}
+
+export type PaymentStatus = 'paid' | 'upcoming' | 'overdue' | 'partial';
+
+export interface PaymentAlert {
+  id: string;
+  customer: string;
+  amount: number;      // 万円
+  dueDate: string;     // ISO date
+  status: PaymentStatus;
+  invoiceNo: string;
+  daysPastDue?: number;
+  note?: string;
+}
+
+export interface CostBreakdown {
+  category: string;
+  plan: number;        // 万円
+  actual: number;      // 万円
+  color: string;
 }

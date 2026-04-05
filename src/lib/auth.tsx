@@ -17,10 +17,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(() => {
     if (typeof window === 'undefined') return null;
     const stored = sessionStorage.getItem('kpios_user');
-    return stored ? JSON.parse(stored) : null;
+    if (!stored) return null;
+    try {
+      return JSON.parse(stored) as User;
+    } catch {
+      sessionStorage.removeItem('kpios_user');
+      return null;
+    }
   });
 
-  const login = useCallback((email: string, _password: string): boolean => {
+  const login = useCallback((email: string, password: string): boolean => {
+    if (password !== 'demo') return false;
     const found = MOCK_USERS.find((u) => u.email === email);
     if (found) {
       setUser(found);
@@ -61,13 +68,13 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 };
 
 export const ROLE_DASHBOARDS: Record<UserRole, string[]> = {
-  CEO: ['CEO', 'CFO', 'Sales', 'CS', 'HR', 'Ops', 'Simulator'],
-  CFO: ['CFO', 'CEO', 'Simulator'],
-  Sales: ['Sales', 'CEO', 'Simulator'],
-  CS: ['CS', 'CEO', 'Simulator'],
-  HR: ['HR', 'CEO', 'Simulator'],
-  Ops: ['Ops', 'CEO', 'Simulator'],
-  Product: ['Product', 'CEO', 'Simulator'],
-  Marketing: ['Marketing', 'CEO', 'Simulator'],
-  Board: ['Board', 'CEO', 'Simulator'],
+  CEO: ['CEO', 'CFO', 'Sales', 'CS', 'HR', 'Ops', 'Finance', 'Decisions', 'Simulator', 'Minutes'],
+  CFO: ['CFO', 'CEO', 'Finance', 'Decisions', 'Simulator', 'Minutes'],
+  Sales: ['Sales', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
+  CS: ['CS', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
+  HR: ['HR', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
+  Ops: ['Ops', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
+  Product: ['Product', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
+  Marketing: ['Marketing', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
+  Board: ['Board', 'CEO', 'Finance', 'Decisions', 'Simulator', 'Minutes'],
 };

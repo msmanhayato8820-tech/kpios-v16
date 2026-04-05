@@ -208,41 +208,247 @@ export const P0_ACTIONS: Action[] = [
 
 export const KEY_DECISIONS: Decision[] = [
   {
+    id: 'DEC-001',
     title: 'ARR定義統一（3社計方法の標準化）',
     date: '2026-03-20',
     priority: 'CRITICAL',
     status: 'pending',
+    context: 'ARR算出方法が3事業で異なり、最大±3億円の乖離が発生。投資家報告・経営判断の基盤が揺らいでいる。',
+    options: [
+      {
+        label: 'A: IFRS準拠で即時統一',
+        pros: ['投資家向け信頼性が最高', 'グローバル基準で比較可能'],
+        cons: ['移行コスト大（約2ヶ月）', '過去データの再計算が必要'],
+        estimated_impact: '経営判断精度が90%→99%に向上',
+        cost: '約500万円（コンサル＋システム改修）',
+        risk_level: 'MEDIUM',
+      },
+      {
+        label: 'B: 社内独自基準で段階的統一',
+        pros: ['低コスト', '段階移行でリスク小'],
+        cons: ['投資家説明に追加工数', '独自基準の維持コスト'],
+        estimated_impact: '精度改善は80%程度',
+        cost: '約150万円',
+        risk_level: 'LOW',
+      },
+    ],
     impact: '経営判断の精度向上・投資家報告の信頼性確保',
     impact_level: 'CRITICAL',
+    risks: ['移行期間中のレポート不整合', '過去データとの連続性断絶'],
     owner: 'CFO',
+    stakeholders: ['CEO', '経理部長', '外部監査法人'],
     due_date: '2026-04-10',
     category: 'Finance',
+    linked_kpis: ['arr', 'mrr'],
+    linked_actions: ['ARR定義統一レポート作成'],
   },
   {
+    id: 'DEC-002',
     title: 'ハイリスク12社レスキュープラン発動',
     date: '2026-03-20',
     priority: 'CRITICAL',
     status: 'pending',
+    context: 'NPS急落＋利用率低下の12社を特定。放置すると年間チャーンMRR▲1,200万円のリスク。',
+    options: [
+      {
+        label: 'A: 全12社に専任CSを配置',
+        pros: ['最速で対応可能', '顧客満足度回復が見込める'],
+        cons: ['CS人員が逼迫', '他案件への影響'],
+        estimated_impact: 'チャーン率70%削減',
+        cost: 'CS2名の3ヶ月アサイン',
+        risk_level: 'MEDIUM',
+      },
+      {
+        label: 'B: 上位6社のみ重点対応',
+        pros: ['リソース効率が良い', 'MRR上位をカバー'],
+        cons: ['残り6社のチャーンリスク残存'],
+        estimated_impact: 'チャーン率40%削減',
+        cost: 'CS1名の3ヶ月アサイン',
+        risk_level: 'HIGH',
+      },
+      {
+        label: 'C: プロダクト改善で一括対応',
+        pros: ['根本解決', 'スケーラブル'],
+        cons: ['時間がかかる（2-3ヶ月）', '個社対応が不十分'],
+        estimated_impact: '長期的にチャーン率50%削減',
+        cost: '開発工数2人月',
+        risk_level: 'HIGH',
+      },
+    ],
     impact: '年間チャーンMRR▲1,200万円のリスク回避',
     impact_level: 'CRITICAL',
+    risks: ['CS人員の過負荷', '対応遅延による顧客離脱加速'],
     owner: 'CS部長',
+    stakeholders: ['CEO', 'Sales部長', 'Product'],
     due_date: '2026-04-05',
     category: 'CS',
+    linked_kpis: ['churn_rate', 'nps'],
+    linked_actions: ['ハイリスク顧客訪問スケジュール'],
   },
   {
+    id: 'DEC-003',
     title: 'BPaaS投資拡大に伴うコスト管理計画策定',
     date: '2026-03-19',
     priority: 'HIGH',
     status: 'in_progress',
+    context: 'BPaaS事業の本格展開に向け投資拡大が必要だが、営業利益率5%の維持も求められる。',
+    options: [
+      {
+        label: 'A: 段階投資（Q2に3,000万、Q3に5,000万）',
+        pros: ['リスク分散', '途中で軌道修正可能'],
+        cons: ['競合に先行される可能性', '人材確保が遅れる'],
+        estimated_impact: 'BPaaS売上Q4に月500万達成',
+        cost: '8,000万円/年',
+        risk_level: 'MEDIUM',
+      },
+      {
+        label: 'B: 一括投資（Q2に8,000万）',
+        pros: ['早期に市場ポジション確立', '人材確保が容易'],
+        cons: ['キャッシュフロー圧迫', '失敗時のダメージ大'],
+        estimated_impact: 'BPaaS売上Q3に月800万達成',
+        cost: '8,000万円/年',
+        risk_level: 'HIGH',
+      },
+    ],
+    selected_option: 0,
+    decision_rationale: '段階投資を選択。Q2の実績を見て追加投資判断することでリスクを管理する。',
     impact: '利益維持・成長投資両立',
     impact_level: 'HIGH',
+    risks: ['投資回収の遅延', '人材採用の競争激化'],
     owner: 'CFO',
+    stakeholders: ['CEO', 'Product責任者', '取締役会'],
     due_date: '2026-04-15',
+    decided_at: '2026-03-25',
     category: 'Finance',
+    linked_kpis: ['operating_margin', 'bpaas_revenue'],
+    linked_actions: ['BPaaS投資計画書作成'],
+  },
+  {
+    id: 'DEC-004',
+    title: 'Denso集中度分散戦略の選定',
+    date: '2026-03-15',
+    priority: 'HIGH',
+    status: 'done',
+    context: 'Denso売上集中度75%は事業リスク。2027年までに60%以下を目標とし、分散戦略を決定する必要がある。',
+    options: [
+      {
+        label: 'A: 物流業界への横展開',
+        pros: ['既存プロダクトの転用可能', '市場規模大'],
+        cons: ['営業体制の構築が必要', '業界知識不足'],
+        estimated_impact: '新規売上年3億円見込み',
+        cost: '営業3名採用＋マーケ費2,000万',
+        risk_level: 'MEDIUM',
+      },
+      {
+        label: 'B: 製造業の中堅企業開拓',
+        pros: ['業界知見あり', '既存レファレンス活用可'],
+        cons: ['単価が低い', '案件数でカバーが必要'],
+        estimated_impact: '新規売上年1.5億円見込み',
+        cost: '営業2名採用',
+        risk_level: 'LOW',
+      },
+    ],
+    selected_option: 0,
+    decision_rationale: '市場規模と成長性を重視し物流業界への横展開を選択。Q2から営業チーム立ち上げ。',
+    impact: 'Denso依存度75%→60%への道筋',
+    impact_level: 'HIGH',
+    risks: ['新規業界での受注サイクルが読めない', '既存顧客対応のリソース分散'],
+    owner: 'Sales部長',
+    stakeholders: ['CEO', 'Product', 'Marketing'],
+    due_date: '2026-03-30',
+    decided_at: '2026-03-28',
+    category: 'Sales',
+    linked_kpis: ['denso_concentration', 'new_logo'],
+    linked_actions: ['物流業界営業チーム組成'],
+    outcome: '物流大手3社への提案開始。1社がPoC実施決定。',
+    outcome_evaluation: 'success',
+  },
+  {
+    id: 'DEC-005',
+    title: 'AI/IoT新製品ロードマップ承認',
+    date: '2026-03-10',
+    priority: 'MEDIUM',
+    status: 'draft',
+    context: '2035年100億円目標達成のため、次世代製品としてAI予知保全ソリューションの開発ロードマップを策定中。',
+    options: [
+      {
+        label: 'A: 自社開発（フルスクラッチ）',
+        pros: ['IP確保', '差別化が明確'],
+        cons: ['開発期間18ヶ月', 'AI人材の採用が必要'],
+        estimated_impact: '3年後に年間売上5億円',
+        cost: '開発費1.5億円',
+        risk_level: 'HIGH',
+      },
+      {
+        label: 'B: パートナー企業との共同開発',
+        pros: ['開発期間短縮', 'リスク分担'],
+        cons: ['IP共有', '利益分配'],
+        estimated_impact: '2年後に年間売上3億円',
+        cost: '開発費5,000万＋レベニューシェア',
+        risk_level: 'MEDIUM',
+      },
+      {
+        label: 'C: OEM/ホワイトラベル導入',
+        pros: ['最短で市場投入', '低コスト'],
+        cons: ['差別化困難', 'ベンダーロックイン'],
+        estimated_impact: '半年後に年間売上1億円',
+        cost: 'ライセンス費年2,000万',
+        risk_level: 'LOW',
+      },
+    ],
+    impact: '2035年100億円ロードマップの中核プロダクト',
+    impact_level: 'HIGH',
+    risks: ['技術的実現性の不確実性', 'AI人材獲得競争'],
+    owner: 'Product責任者',
+    stakeholders: ['CEO', 'CTO', 'Sales部長'],
+    due_date: '2026-04-30',
+    category: 'Product',
+    linked_kpis: ['product_nps', 'feature_adoption'],
+    linked_actions: [],
+  },
+  {
+    id: 'DEC-006',
+    title: '新卒採用枠の拡大判断',
+    date: '2026-03-05',
+    priority: 'MEDIUM',
+    status: 'done',
+    context: '事業拡大に伴い、2027年度の新卒採用を現行5名→10名に拡大すべきか判断が必要。',
+    options: [
+      {
+        label: 'A: 10名に倍増',
+        pros: ['将来の幹部候補確保', '組織の若返り'],
+        cons: ['育成負荷増大', '固定費増加'],
+        estimated_impact: '2028年以降の組織力強化',
+        cost: '採用費＋人件費で年3,000万増',
+        risk_level: 'MEDIUM',
+      },
+      {
+        label: 'B: 7名に微増',
+        pros: ['バランス型', '育成品質を維持'],
+        cons: ['成長ペースに足りない可能性'],
+        estimated_impact: '2028年以降の安定的な組織拡大',
+        cost: '年1,500万増',
+        risk_level: 'LOW',
+      },
+    ],
+    selected_option: 1,
+    decision_rationale: '育成体制を先に整備し、2028年度に本格拡大する段階的アプローチを採用。',
+    impact: '組織力・採用ブランドの強化',
+    impact_level: 'MEDIUM',
+    risks: ['採用競争での不利', '即戦力不足'],
+    owner: 'HR部長',
+    stakeholders: ['CEO', '各部門長'],
+    due_date: '2026-03-20',
+    decided_at: '2026-03-18',
+    category: 'HR',
+    linked_kpis: ['headcount', 'retention_rate'],
+    linked_actions: ['2027年度採用計画策定'],
+    outcome: '7名採用で内定承諾率86%を達成。',
+    outcome_evaluation: 'success',
   },
 ];
 
-export const CEO_SUMMARY = '営業利益率5%で目標達成。Denso集中度75%の分散とSeries B準備が最重要課題。バックログ急増でSLAにも黄色信号。採用遅延が組織拡張のボトルネック。';
+export const CEO_SUMMARY = '2035年売上高100億円目標に向け、SaaS型安定成長・売上構成多角化・事業領域拡張の3本柱で推進中。営業利益率5%達成。Denso集中度75%の分散が最重要課題。BPaaS本格展開とAI/IoT活用による次世代製品開発を加速。';
 
 export const ARR_HISTORY = [
   { month: '2025-04', arr: 20.0 },
@@ -285,10 +491,10 @@ export const SALES_KPIS: Kpi[] = [
 ];
 
 export const MRR_BREAKDOWN = [
-  { name: 'Fleet (GBC/GBCDR)', value: 8333 },
-  { name: 'BSS', value: 6667 },
-  { name: 'ALC', value: 5000 },
-  { name: '新サービス', value: 2500 },
+  { name: 'GBC/GBCDR（運行管理・安全運転管理）', value: 8333 },
+  { name: 'BSS（業種特化型グループウェア）', value: 6667 },
+  { name: 'BSSforALC（アルコール測定管理）', value: 5000 },
+  { name: '新サービス（BPaaS等）', value: 2500 },
 ];
 
 // CS KPIs
@@ -318,10 +524,11 @@ export const HR_KPIS: Kpi[] = [
 ];
 
 export const DEPT_BREAKDOWN = [
-  { name: '営業', headcount: 15, productivity: 450 },
-  { name: '開発', headcount: 30, productivity: 280 },
-  { name: 'サポート', headcount: 28, productivity: 230 },
-  { name: '管理', headcount: 7, productivity: 210 },
+  { name: 'システム営業部', headcount: 19, productivity: 450 },
+  { name: 'システム開発部', headcount: 30, productivity: 280 },
+  { name: 'ユーザーサポート', headcount: 14, productivity: 230 },
+  { name: 'コールセンター', headcount: 13, productivity: 210 },
+  { name: '総務部', headcount: 4, productivity: 200 },
 ];
 
 // Ops KPIs
@@ -426,12 +633,12 @@ export const ALL_DEPARTMENT_KPIS: Record<string, { api_key: string; name: string
 
 // プロダクトライン
 export const PRODUCT_LINES = [
-  { id: 'gbc',       shortName: 'GBC',       description: 'GrowthBOX Core',    color: '#3b82f6', currentArr: 12, targetArr2035: 35 },
-  { id: 'gbcdr',     shortName: 'GBCDR',     description: 'GBC + ドラレコ',    color: '#6366f1', currentArr: 5,  targetArr2035: 18 },
-  { id: 'bss',       shortName: 'BSS',       description: 'BSS点呼',           color: '#10b981', currentArr: 6,  targetArr2035: 20 },
-  { id: 'bssforalc', shortName: 'BSSforALC', description: 'アルコール検知',   color: '#f59e0b', currentArr: 3,  targetArr2035: 12 },
-  { id: 'new_svc',   shortName: '新サービス', description: '次世代サービス',   color: '#8b5cf6', currentArr: 1,  targetArr2035: 10 },
-  { id: 'new_prod',  shortName: '新製品',     description: 'ハードウェア',     color: '#ef4444', currentArr: 0,  targetArr2035: 5  },
+  { id: 'gbc',       shortName: 'GBC',       description: '運行管理システム',               color: '#3b82f6', currentArr: 12, targetArr2035: 35 },
+  { id: 'gbcdr',     shortName: 'GBCDR',     description: '安全運転管理システム',           color: '#6366f1', currentArr: 5,  targetArr2035: 18 },
+  { id: 'bss',       shortName: 'BSS',       description: '業種特化型グループウェア',       color: '#10b981', currentArr: 6,  targetArr2035: 20 },
+  { id: 'bssforalc', shortName: 'BSSforALC', description: 'アルコール測定管理支援サービス', color: '#f59e0b', currentArr: 3,  targetArr2035: 12 },
+  { id: 'new_svc',   shortName: '新サービス', description: 'BPaaS等の次世代サービス',       color: '#8b5cf6', currentArr: 1,  targetArr2035: 10 },
+  { id: 'new_prod',  shortName: '新製品',     description: 'ハードウェア（OEM等）',         color: '#ef4444', currentArr: 0,  targetArr2035: 5  },
 ];
 
 // 100億ロードマップ（積み上げ棒グラフ用）
@@ -464,63 +671,67 @@ export interface StrategicGoal {
 export const STRATEGIC_GOALS: StrategicGoal[] = [
   {
     id: 'goal1', number: 1,
-    title: '管理車両数 13万台達成（2030年）',
+    title: 'SaaS型ビジネスモデルによる安定的な成長の実現',
     progress: 73,
     status: 'on_track',
     keyMetrics: [
-      { label: '現在', current: '95,000台', target: '130,000台' },
-      { label: '月次純増', current: '約800台', target: '1,200台' },
+      { label: '管理車両数', current: '95,000台', target: '130,000台（2030年）' },
+      { label: '導入社数', current: '約10,000社', target: '13,000社（2030年）' },
+      { label: '推定ARR', current: '27億円', target: '100億円（2035年）' },
     ],
-    challenges: ['Denso経由販売への依存（売上75%集中）', '自社直販チャネルが未確立'],
-    measures: ['パートナー戦略でDealer網を拡充', '直販チームを2026年Q1に組成'],
+    challenges: [
+      '事業拡大に伴い、現社屋ではハード面（事業所面積）が不足',
+      '導入社数増加に比例して現人員ではサポート・保守負担が増加する懸念',
+    ],
+    measures: [
+      '主力サービス（BSS、BSS for ALC）のサポート体制（コールセンター等）の強化',
+      '営業部署の人員増加により2030年には13,000社導入の確実な実現',
+      '開発人員の増員による製品の内製比率を高め、サポート負荷を軽減',
+    ],
   },
   {
     id: 'goal2', number: 2,
-    title: 'ARR 100億円（2035年）',
+    title: '新サービス・新製品群による売上構成比の多角化',
     progress: 27,
     status: 'at_risk',
     keyMetrics: [
-      { label: '現在ARR', current: '27億円', target: '100億円' },
-      { label: 'ARPU', current: '27万円/年', target: '65万円/年' },
+      { label: 'Denso売上集中度', current: '75%', target: '50%以下' },
+      { label: 'NRR', current: '112%', target: '120%' },
+      { label: '新サービスARR', current: '1億円', target: '10億円（2035年）' },
     ],
-    challenges: ['ARPU単価が目標の約40%水準', 'クロスセル率が低い'],
-    measures: ['BSSforALC + GBC バンドル展開', '大口顧客へのエンタープライズプラン策定'],
+    challenges: [
+      '既存プロダクトの付加価値増加',
+      '新プロダクト開発にかかる初期投資負担の回収',
+    ],
+    measures: [
+      'BPaaS（点呼・台帳・配車管理等の業務代行サービス）の本格展開',
+      'AI・クラウドと連携した安全運転教育や車両稼働管理',
+      'EV支援等を含む複合ソリューションの提供',
+      'ハードウェアの自社ブランド製造（OEM等）',
+    ],
   },
   {
     id: 'goal3', number: 3,
-    title: 'NRR 120%達成',
+    title: 'マーケティング戦略の拡充及び人員増加による事業領域の拡張',
     progress: 55,
     status: 'at_risk',
     keyMetrics: [
-      { label: '現在NRR', current: '112%', target: '120%' },
-      { label: 'Churn率', current: '1.0%', target: '0.8%' },
+      { label: '新規獲得', current: '80社/月', target: '100社/月' },
+      { label: '従業員数', current: '80名', target: '90名（2026年度目標）' },
+      { label: '商談化率', current: '30%', target: '35%' },
     ],
-    challenges: ['ハイリスクアカウント12社が解約リスク', 'CS人員が不足'],
-    measures: ['CS部門増員（2名採用）', 'ハイリスク12社に専任CSM配置'],
-  },
-  {
-    id: 'goal4', number: 4,
-    title: 'Denso売上集中度 50%以下',
-    progress: 40,
-    status: 'behind',
-    keyMetrics: [
-      { label: '現在', current: '75%', target: '50%以下' },
-      { label: '直販比率', current: '25%', target: '50%' },
+    challenges: [
+      '市場浸透にはさらなる信頼性・導入実績が必要',
+      '事業の根幹を担うシステム開発環境の早急な整備',
     ],
-    challenges: ['Denso依存からの脱却に時間軸が必要', '新規パートナー開拓が遅延'],
-    measures: ['2026年中に新規代理店10社との契約締結', '自社展示会・セミナーの年4回開催'],
-  },
-  {
-    id: 'goal5', number: 5,
-    title: '新規月次獲得 100社/月',
-    progress: 80,
-    status: 'at_risk',
-    keyMetrics: [
-      { label: '現在', current: '80社/月', target: '100社/月' },
-      { label: 'パイプライン', current: '4,500万円', target: '5,000万円' },
+    measures: [
+      '新社屋建設によるシステム開発部署の最適化された開発環境整備',
+      '各部署への人員拡充を行い、部署ごとの対応力の大幅な向上',
+      '自社の営業部員増加による販売力の強化',
+      '展示会への参加、セミナー等の開催を積極的に行い、商品の認知度の向上',
+      'ASEAN地域等への海外展開',
+      'M&Aによる機能・販路強化',
     ],
-    challenges: ['商談化率が30%（目標35%）', 'SDR人員が不足'],
-    measures: ['インサイドセールス2名採用', 'ABM施策でエンタープライズ開拓強化'],
   },
 ];
 
@@ -532,3 +743,44 @@ export const DEFAULT_SIMULATOR_PARAMS = {
   growthRate: 35,
   churnRate: 1.0,
 };
+
+// ===== 財務ダッシュボード モックデータ =====
+import { MonthlyFinance, PaymentAlert, CostBreakdown } from '@/types';
+
+// 月次 売上/コスト/利益（計画・実績・見込み）
+export const MONTHLY_FINANCE: MonthlyFinance[] = [
+  { month: '2026-01', label: '1月',  revenuePlan: 22500, revenueActual: 23100, revenueForecast: 23100, costPlan: 17800, costActual: 17200, costForecast: 17200, profitPlan: 4700, profitActual: 5900, profitForecast: 5900 },
+  { month: '2026-02', label: '2月',  revenuePlan: 22800, revenueActual: 22400, revenueForecast: 22400, costPlan: 17900, costActual: 18300, costForecast: 18300, profitPlan: 4900, profitActual: 4100, profitForecast: 4100 },
+  { month: '2026-03', label: '3月',  revenuePlan: 24500, revenueActual: 25800, revenueForecast: 25800, costPlan: 18500, costActual: 18100, costForecast: 18100, profitPlan: 6000, profitActual: 7700, profitForecast: 7700 },
+  { month: '2026-04', label: '4月',  revenuePlan: 23000, revenueActual: 23500, revenueForecast: 23500, costPlan: 18000, costActual: 17800, costForecast: 17800, profitPlan: 5000, profitActual: 5700, profitForecast: 5700 },
+  { month: '2026-05', label: '5月',  revenuePlan: 23200, revenueActual: null,  revenueForecast: 23800, costPlan: 18100, costActual: null,  costForecast: 17900, profitPlan: 5100, profitActual: null,  profitForecast: 5900 },
+  { month: '2026-06', label: '6月',  revenuePlan: 23500, revenueActual: null,  revenueForecast: 24200, costPlan: 18200, costActual: null,  costForecast: 18000, profitPlan: 5300, profitActual: null,  profitForecast: 6200 },
+  { month: '2026-07', label: '7月',  revenuePlan: 23800, revenueActual: null,  revenueForecast: 24500, costPlan: 18300, costActual: null,  costForecast: 18100, profitPlan: 5500, profitActual: null,  profitForecast: 6400 },
+  { month: '2026-08', label: '8月',  revenuePlan: 23000, revenueActual: null,  revenueForecast: 23600, costPlan: 18100, costActual: null,  costForecast: 17900, profitPlan: 4900, profitActual: null,  profitForecast: 5700 },
+  { month: '2026-09', label: '9月',  revenuePlan: 24000, revenueActual: null,  revenueForecast: 24800, costPlan: 18400, costActual: null,  costForecast: 18200, profitPlan: 5600, profitActual: null,  profitForecast: 6600 },
+  { month: '2026-10', label: '10月', revenuePlan: 24200, revenueActual: null,  revenueForecast: 25000, costPlan: 18500, costActual: null,  costForecast: 18300, profitPlan: 5700, profitActual: null,  profitForecast: 6700 },
+  { month: '2026-11', label: '11月', revenuePlan: 24500, revenueActual: null,  revenueForecast: 25300, costPlan: 18600, costActual: null,  costForecast: 18400, profitPlan: 5900, profitActual: null,  profitForecast: 6900 },
+  { month: '2026-12', label: '12月', revenuePlan: 26000, revenueActual: null,  revenueForecast: 27000, costPlan: 19000, costActual: null,  costForecast: 18700, profitPlan: 7000, profitActual: null,  profitForecast: 8300 },
+];
+
+// 入金アラート
+export const PAYMENT_ALERTS: PaymentAlert[] = [
+  { id: 'pa-1', customer: 'デンソーテン株式会社', amount: 4500, dueDate: '2026-03-31', status: 'paid', invoiceNo: 'INV-2026-0301' },
+  { id: 'pa-2', customer: '大和ハウス工業株式会社', amount: 1200, dueDate: '2026-04-15', status: 'overdue', invoiceNo: 'INV-2026-0402', daysPastDue: 21, note: '経理へ督促メール送付済み' },
+  { id: 'pa-3', customer: '株式会社ゼンリン', amount: 800, dueDate: '2026-04-30', status: 'partial', invoiceNo: 'INV-2026-0410', note: '400万円入金済み、残額確認中' },
+  { id: 'pa-4', customer: '佐川グローバルロジスティクス', amount: 2100, dueDate: '2026-05-10', status: 'upcoming', invoiceNo: 'INV-2026-0501' },
+  { id: 'pa-5', customer: 'SBSホールディングス', amount: 950, dueDate: '2026-05-15', status: 'upcoming', invoiceNo: 'INV-2026-0502' },
+  { id: 'pa-6', customer: 'トランスコスモス株式会社', amount: 680, dueDate: '2026-05-20', status: 'upcoming', invoiceNo: 'INV-2026-0503' },
+  { id: 'pa-7', customer: '株式会社日立物流', amount: 3200, dueDate: '2026-05-31', status: 'upcoming', invoiceNo: 'INV-2026-0504' },
+  { id: 'pa-8', customer: 'ヤマトシステム開発', amount: 1500, dueDate: '2026-03-25', status: 'overdue', invoiceNo: 'INV-2026-0305', daysPastDue: 42, note: '分割払い交渉中' },
+];
+
+// コスト内訳
+export const COST_BREAKDOWN: CostBreakdown[] = [
+  { category: '人件費', plan: 9800, actual: 9600, color: '#3b82f6' },
+  { category: 'サーバー/クラウド', plan: 2800, actual: 3100, color: '#8b5cf6' },
+  { category: '外注費', plan: 2200, actual: 2000, color: '#06b6d4' },
+  { category: 'オフィス/設備', plan: 1500, actual: 1400, color: '#10b981' },
+  { category: '営業・マーケ', plan: 1200, actual: 1100, color: '#f59e0b' },
+  { category: 'その他', plan: 500, actual: 600, color: '#6b7280' },
+];

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth, ROLE_DASHBOARDS } from '@/lib/auth';
 import { useTheme } from '@/lib/theme';
+import AiChatButton from '@/components/AiChat/AiChatButton';
+import AiChatPanel from '@/components/AiChat/AiChatPanel';
 
 const NAV_ITEMS: { id: string; label: string; href: string }[] = [
   { id: 'CEO', label: 'CEO', href: '/dashboard' },
@@ -13,7 +15,10 @@ const NAV_ITEMS: { id: string; label: string; href: string }[] = [
   { id: 'CS', label: 'CS', href: '/dashboard/cs' },
   { id: 'HR', label: 'HR', href: '/dashboard/hr' },
   { id: 'Ops', label: 'Ops', href: '/dashboard/ops' },
+  { id: 'Finance', label: 'Finance', href: '/dashboard/finance' },
+  { id: 'Decisions', label: 'Decisions', href: '/dashboard/decisions' },
   { id: 'Simulator', label: 'Simulator', href: '/dashboard/simulator' },
+  { id: 'Minutes', label: 'Minutes', href: '/dashboard/minutes' },
 ];
 
 export default function TopNav() {
@@ -22,10 +27,12 @@ export default function TopNav() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const allowed = user ? ROLE_DASHBOARDS[user.role] : [];
   const visibleItems = NAV_ITEMS.filter((item) => allowed.includes(item.id));
 
   return (
+    <>
     <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--nav-bg)] backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex h-14 items-center justify-between gap-4">
@@ -63,6 +70,9 @@ export default function TopNav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            {/* AI Advisor */}
+            <AiChatButton onClick={() => setChatOpen(true)} />
+
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
@@ -152,5 +162,8 @@ export default function TopNav() {
         </div>
       )}
     </header>
+
+    <AiChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
+    </>
   );
 }
