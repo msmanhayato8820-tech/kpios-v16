@@ -15,7 +15,6 @@ const NAV_ITEMS: { id: string; label: string; href: string }[] = [
   { id: 'CS', label: 'CS', href: '/dashboard/cs' },
   { id: 'HR', label: 'HR', href: '/dashboard/hr' },
   { id: 'Ops', label: 'Ops', href: '/dashboard/ops' },
-  { id: 'Finance', label: 'Finance', href: '/dashboard/finance' },
   { id: 'Decisions', label: 'Decisions', href: '/dashboard/decisions' },
   { id: 'Simulator', label: 'Simulator', href: '/dashboard/simulator' },
   { id: 'Minutes', label: 'Minutes', href: '/dashboard/minutes' },

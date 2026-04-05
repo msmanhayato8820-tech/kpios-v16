@@ -68,13 +68,13 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 };
 
 export const ROLE_DASHBOARDS: Record<UserRole, string[]> = {
-  CEO: ['CEO', 'CFO', 'Sales', 'CS', 'HR', 'Ops', 'Finance', 'Decisions', 'Simulator', 'Minutes'],
-  CFO: ['CFO', 'CEO', 'Finance', 'Decisions', 'Simulator', 'Minutes'],
+  CEO: ['CEO', 'CFO', 'Sales', 'CS', 'HR', 'Ops', 'Decisions', 'Simulator', 'Minutes'],
+  CFO: ['CFO', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
   Sales: ['Sales', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
   CS: ['CS', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
   HR: ['HR', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
   Ops: ['Ops', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
   Product: ['Product', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
   Marketing: ['Marketing', 'CEO', 'Decisions', 'Simulator', 'Minutes'],
-  Board: ['Board', 'CEO', 'Finance', 'Decisions', 'Simulator', 'Minutes'],
+  Board: ['Board', 'CEO', 'CFO', 'Decisions', 'Simulator', 'Minutes'],
 };
