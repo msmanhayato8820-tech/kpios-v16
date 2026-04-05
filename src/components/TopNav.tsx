@@ -18,6 +18,7 @@ const NAV_ITEMS: { id: string; label: string; href: string }[] = [
   { id: 'Decisions', label: 'Decisions', href: '/dashboard/decisions' },
   { id: 'Simulator', label: 'Simulator', href: '/dashboard/simulator' },
   { id: 'Minutes', label: 'Minutes', href: '/dashboard/minutes' },
+  { id: 'Settings', label: 'Settings', href: '/dashboard/settings' },
 ];
 
 export default function TopNav() {
