@@ -10,7 +10,7 @@ test('モバイルハンバーガーメニューの詳細確認', async ({ page 
   // ログイン
   await page.goto(`${BASE_URL}/login`);
   await page.waitForLoadState('networkidle');
-  await page.fill('input[type="email"]', 'ceo@anest.co.jp');
+  await page.fill('input[type="email"]', 'ceo@anestsystem.jp');
   await page.fill('input[type="password"]', 'demo');
   await page.click('button[type="submit"]');
   await page.waitForURL('**/dashboard**', { timeout: 15000 });
@@ -74,7 +74,7 @@ test('モバイル表示のUIレイアウト確認', async ({ page }) => {
   // ログイン
   await page.goto(`${BASE_URL}/login`);
   await page.waitForLoadState('networkidle');
-  await page.fill('input[type="email"]', 'ceo@anest.co.jp');
+  await page.fill('input[type="email"]', 'ceo@anestsystem.jp');
   await page.fill('input[type="password"]', 'demo');
   await page.click('button[type="submit"]');
   await page.waitForURL('**/dashboard**', { timeout: 15000 });

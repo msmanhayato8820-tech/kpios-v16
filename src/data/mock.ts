@@ -1,12 +1,12 @@
 import { Kpi, Action, Decision, User } from '@/types';
 
 export const MOCK_USERS: User[] = [
-  { email: 'ceo@anest.co.jp', name: '尾田 専務', role: 'CEO' },
-  { email: 'cfo@anest.co.jp', name: '財務部長', role: 'CFO' },
-  { email: 'sales@anest.co.jp', name: '営業部長', role: 'Sales' },
-  { email: 'cs@anest.co.jp', name: 'CS部長', role: 'CS' },
-  { email: 'hr@anest.co.jp', name: 'HR部長', role: 'HR' },
-  { email: 'ops@anest.co.jp', name: 'Ops部長', role: 'Ops' },
+  { email: 'ceo@anestsystem.jp', name: '尾田 専務', role: 'CEO' },
+  { email: 'cfo@anestsystem.jp', name: '財務部長', role: 'CFO' },
+  { email: 'sales@anestsystem.jp', name: '営業部長', role: 'Sales' },
+  { email: 'cs@anestsystem.jp', name: 'CS部長', role: 'CS' },
+  { email: 'hr@anestsystem.jp', name: 'HR部長', role: 'HR' },
+  { email: 'ops@anestsystem.jp', name: 'Ops部長', role: 'Ops' },
 ];
 
 export const NORTH_STAR: Kpi = {

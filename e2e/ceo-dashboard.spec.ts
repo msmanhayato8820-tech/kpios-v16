@@ -7,7 +7,7 @@ const BASE_URL = 'https://kpios-v16.vercel.app';
 async function login(page: Page) {
   await page.goto(`${BASE_URL}/login`);
   await page.waitForLoadState('networkidle');
-  await page.fill('input[type="email"]', 'ceo@anest.co.jp');
+  await page.fill('input[type="email"]', 'ceo@anestsystem.jp');
   await page.fill('input[type="password"]', 'demo');
   await page.click('button[type="submit"]');
   await page.waitForURL('**/dashboard**', { timeout: 15000 });
@@ -33,7 +33,7 @@ test.describe('CEO Dashboard E2E', () => {
     await page.screenshot({ path: `${SCREENSHOT_DIR}/01-login-page.png`, fullPage: true });
 
     // CEOでログイン
-    await page.fill('input[type="email"]', 'ceo@anest.co.jp');
+    await page.fill('input[type="email"]', 'ceo@anestsystem.jp');
     await page.fill('input[type="password"]', 'demo');
     await page.screenshot({ path: `${SCREENSHOT_DIR}/02-login-filled.png`, fullPage: true });
 
