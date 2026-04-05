@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import NorthStarMetric from '@/components/NorthStarMetric';
 import KpiCard from '@/components/KpiCard';
@@ -77,10 +78,28 @@ export default function CeoDashboard() {
 
       {/* Key Decisions */}
       <div>
-        <h2 className="text-sm font-medium text-[var(--text-tertiary)] mb-3">重要意思決定</h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-medium text-[var(--text-tertiary)] flex items-center gap-2">
+            重要意思決定
+            {KEY_DECISIONS.filter((d) => d.status === 'pending' || d.status === 'draft').length > 0 && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400 font-medium">
+                {KEY_DECISIONS.filter((d) => d.status === 'pending' || d.status === 'draft').length}件 要判断
+              </span>
+            )}
+          </h2>
+          <Link
+            href="/dashboard/decisions"
+            className="text-xs text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
+          >
+            Decision Hub
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </Link>
+        </div>
         <div className="space-y-2">
-          {KEY_DECISIONS.map((d, i) => (
-            <div key={i} className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-3 flex items-center gap-3 transition-all hover:border-[var(--border-strong)]">
+          {KEY_DECISIONS.filter((d) => d.status !== 'done' && d.status !== 'cancelled').slice(0, 4).map((d) => (
+            <Link key={d.id} href="/dashboard/decisions" className="flex rounded-xl border border-[var(--border)] bg-[var(--card-bg)] shadow-[var(--shadow-card)] p-3 items-center gap-3 transition-all hover:border-[var(--border-strong)] hover:bg-[var(--card-bg-hover)]">
               <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium shrink-0 ${
                 d.priority === 'CRITICAL' ? 'bg-red-500/15 text-red-400' :
                 d.priority === 'HIGH' ? 'bg-amber-500/15 text-amber-400' :
@@ -90,12 +109,19 @@ export default function CeoDashboard() {
                 <p className="text-sm text-[var(--text-primary)] truncate">{d.title}</p>
                 <p className="text-xs text-[var(--text-tertiary)]">{d.owner} / 期限: {d.due_date}</p>
               </div>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-md shrink-0 ${
-                d.status === 'done' ? 'bg-emerald-500/15 text-emerald-400' :
-                d.status === 'in_progress' ? 'bg-blue-500/15 text-blue-400' :
-                'bg-[var(--hover-bg)] text-[var(--text-tertiary)]'
-              }`}>{d.status === 'pending' ? '未着手' : d.status === 'in_progress' ? '進行中' : '完了'}</span>
-            </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {d.options.length > 0 && (
+                  <span className="text-[10px] text-[var(--text-tertiary)]">
+                    {d.selected_option !== undefined ? '決定済' : `${d.options.length}案`}
+                  </span>
+                )}
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${
+                  d.status === 'in_progress' ? 'bg-blue-500/15 text-blue-400' :
+                  d.status === 'pending' ? 'bg-yellow-500/15 text-yellow-400' :
+                  'bg-[var(--hover-bg)] text-[var(--text-tertiary)]'
+                }`}>{d.status === 'pending' ? '未着手' : d.status === 'in_progress' ? '進行中' : d.status === 'draft' ? '下書き' : d.status}</span>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

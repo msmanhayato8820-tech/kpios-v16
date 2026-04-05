@@ -83,18 +83,16 @@ export default function LoginPage() {
 
           <div className="mt-6 pt-5 border-t border-[var(--border)]">
             <p className="text-xs text-[var(--text-tertiary)] mb-3">デモアカウント（パスワード: <span className="font-semibold text-blue-400">demo</span>）</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
               {MOCK_USERS.map((u) => (
                 <button
                   key={u.email}
                   onClick={() => { setEmail(u.email); setPassword('demo'); setError(''); }}
-                  className="text-xs px-3 py-2 bg-[var(--bg-primary)] hover:bg-[var(--hover-bg)] border border-[var(--border)] rounded-xl text-[var(--text-secondary)] transition-all text-left hover:border-[var(--border-strong)]"
+                  className="text-xs px-3 py-2 bg-[var(--bg-primary)] hover:bg-[var(--hover-bg)] border border-[var(--border)] rounded-xl text-[var(--text-secondary)] transition-all text-left hover:border-[var(--border-strong)] overflow-hidden"
                 >
-                  <span className="font-medium text-[var(--text-primary)]">{u.role}</span>
-                  <br />
-                  <span className="text-[var(--text-tertiary)]">{u.name}</span>
-                  <br />
-                  <span className="text-[var(--text-tertiary)] opacity-70" style={{fontSize:'10px'}}>{u.email}</span>
+                  <span className="font-medium text-[var(--text-primary)] block truncate">{u.role}</span>
+                  <span className="text-[var(--text-tertiary)] block truncate">{u.name}</span>
+                  <span className="text-[var(--text-tertiary)] opacity-70 block truncate" style={{fontSize:'10px'}}>{u.email}</span>
                 </button>
               ))}
             </div>

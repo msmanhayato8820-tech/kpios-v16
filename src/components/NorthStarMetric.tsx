@@ -13,14 +13,16 @@ export default function NorthStarMetric({ kpi }: { kpi: Kpi }) {
         </div>
         <h2 className="text-base text-[var(--text-secondary)] mb-3">{kpi.name}</h2>
         <div className="flex items-baseline gap-3">
-          <span className="text-5xl font-bold text-[var(--text-primary)]">{kpi.value}%</span>
+          <span className="text-5xl font-bold text-[var(--text-primary)]">
+            {kpi.value != null ? `${kpi.value}%` : '未計測'}
+          </span>
           <div className="flex flex-col">
             <span className="text-sm text-emerald-400 font-semibold">{kpi.mom_change}</span>
             <span className="text-xs text-[var(--text-tertiary)]">目標 {kpi.target}%</span>
           </div>
         </div>
         <p className="text-sm text-[var(--text-tertiary)] mt-3 leading-relaxed">
-          目標の{kpi.target}%を大幅に上回る{kpi.value}%で推移。成長は健全だがDenso集中度の分散が次の課題。
+          目標の{kpi.target}%を大幅に上回る{kpi.value != null ? `${kpi.value}%` : '未計測'}で推移。成長は健全だがDenso集中度の分散が次の課題。
         </p>
       </div>
     </div>

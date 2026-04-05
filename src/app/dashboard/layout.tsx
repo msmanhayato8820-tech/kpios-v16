@@ -2,8 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthProvider, useAuth } from '@/lib/auth';
-import { ThemeProvider } from '@/lib/theme';
+import { useAuth } from '@/lib/auth';
 import TopNav from '@/components/TopNav';
 
 function DashboardGuard({ children }: { children: React.ReactNode }) {
@@ -27,11 +26,5 @@ function DashboardGuard({ children }: { children: React.ReactNode }) {
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <ThemeProvider>
-      <AuthProvider>
-        <DashboardGuard>{children}</DashboardGuard>
-      </AuthProvider>
-    </ThemeProvider>
-  );
+  return <DashboardGuard>{children}</DashboardGuard>;
 }
